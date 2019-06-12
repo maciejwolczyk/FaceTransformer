@@ -1,0 +1,66 @@
+<html>
+    <head>
+       <title>Make me smile</title> 
+       <meta charset="UTF-8" />
+       <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+       <script src="https://unpkg.com/@tensorflow/tfjs-converter"></script>
+       <script src="https://docs.opencv.org/master/opencv.js"></script>
+       <script src="https://docs.opencv.org/master/utils.js"></script>
+
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    </head>
+<body>
+<main>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                
+                <div class="progress progress-bar progress-bar-striped progress-bar-animated mb-2">Loading Model</div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <input id ="image-selector" class="form-control border-0" type="file">
+
+            <select id ="target-sex">
+                <option value=0>Kobieta</option>
+                <option value=1>Mężczyzna</option>
+            </select>
+            <select id="target-smile">
+                <option value=0>Brak uśmiechu</option>
+                <option value=1>Uśmiech</option>
+            </select>
+
+            <div class="slidecontainer">
+              <input type="range" min="-50" max="150" value="100" class="slider" id="interpolation-step">
+            </div>
+
+            </div>
+
+            <div class="col-6">
+                <button id="predict-button" class="btn btn-dark float-right">Predict</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="ml-3">Image</h2>
+                <img id="selected-image" class="ml-3" src="">
+                <canvas id="resized-canvas"></canvas>
+                <canvas id="output-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0"> </script>
+
+<script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
+
+
+<script src="predict.js"></script>
+
+    </body>
+</html>
