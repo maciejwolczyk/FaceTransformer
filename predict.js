@@ -124,7 +124,7 @@ transform_face = async function() {
         .reshape([-1, img_width * img_height * 3])
         .div(255);
             
-    encoded = encoder.predict(tensor)
+    encoded = await encoder.executeAsync(tensor)
     means = encoded[0].arraySync()
     tensor_z = encoded[1]
     console.log("means", means[0], means[3])
@@ -153,7 +153,7 @@ transform_face = async function() {
     shift = tf.mul(interpolation_step, tf.sub(tensor_means[target_idx], tensor_means[source_idx]))
 
     shifted_tensor_z = tf.add(encoded[1], shift)
-    tensor_image = decoder.predict(shifted_tensor_z)
+    tensor_image = await decoder.executeAsync(shifted_tensor_z)
 
     const res = tensor_image.mul(255).toInt().reshape([img_height, img_width,-1])
     const arr = Array.from(res.dataSync())
