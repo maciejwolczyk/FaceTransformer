@@ -24,7 +24,6 @@ resize_image = function() {
     let gray = new cv.Mat();
     let faces = new cv.RectVector();
 
-    console.log(face_detector)
 
     cv_image = cv.imread('selected-image');
     cv.cvtColor(cv_image, gray, cv.COLOR_RGBA2GRAY, 0);
@@ -60,12 +59,10 @@ resize_image = function() {
         [center_y - half_side, center_y + half_side], 
         [center_x - half_side, center_x + half_side], 
     )
-    console.log(square_image.shape)
 
     // TODO: do this via opencv?
     //
     resized_image = nj.images.resize(square_image, img_height, img_width);
-    console.log("resized", resized_image.shape)
 
     var canvas = document.getElementById('resized-canvas');
     canvas.height = img_height; canvas.width = img_width;
@@ -85,7 +82,6 @@ $("#image-selector").change(function(){
         let dataURL = reader.result;
         $("#selected-image").attr("src",dataURL);
         $("#prediction-list").empty();
-        console.log("reader onload!");
     }
 
     // image_parent = $("#selected-image").parent()
@@ -109,7 +105,6 @@ let face_detector;
     // use createFileFromUrl to "pre-build" the xml
     utils.createFileFromUrl(faceCascadeFile, faceCascadeFile, () => {
         var result = face_detector.load(faceCascadeFile); // in the callback, load the cascade from file
-        console.log(result)
     });
 })();
 
@@ -123,7 +118,6 @@ transform_face = async function() {
     encoded = await encoder.executeAsync(tensor)
     means = encoded[0].arraySync()
     tensor_z = encoded[1]
-    console.log("means", means[0], means[3])
 
     var tensor_means = new Array(4)
     var distance = new Array(4)
@@ -133,11 +127,8 @@ transform_face = async function() {
         distance[i] = tf.sum(dist).dataSync()[0]
     }
 
-    console.log(distance)
-    console.log("tensor z", tensor_z, "means", means)
 
     source_idx = indexOfMin(distance)
-    console.log("source idx!", source_idx)
 
     target_sex = document.getElementById("target-sex").value
     target_smile = document.getElementById("target-smile").value
@@ -145,7 +136,6 @@ transform_face = async function() {
     target_idx = parseInt(target_sex) * 2 + parseInt(target_smile)
 
     interpolation_step = parseFloat(document.getElementById("interpolation-step").value) / 100
-    console.log(target_idx, interpolation_step) 
     shift = tf.mul(interpolation_step, tf.sub(tensor_means[target_idx], tensor_means[source_idx]))
 
     shifted_tensor_z = tf.add(encoded[1], shift)
@@ -187,8 +177,8 @@ transform_face = async function() {
 
 
     arr2 = btoa(JSON.stringify(a))
-    console.log(arr2)
-    console.log(JSON.stringify(a))
+    // console.log(arr2)
+    // console.log(JSON.stringify(a))
 
     $('#ItemPreview').attr('src', dataUri);
 }
