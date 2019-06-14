@@ -73,7 +73,8 @@ resize_image = function() {
 }
 
 document.getElementById("selected-image").onload = function() {
-    resize_image()
+    resize_image();
+    transform_face();
 }
 
 $("#image-selector").change(function(){
@@ -84,14 +85,9 @@ $("#image-selector").change(function(){
         let dataURL = reader.result;
         $("#selected-image").attr("src",dataURL);
         $("#prediction-list").empty();
-        console.log("reader onload!")
+        console.log("reader onload!");
     }
 
-
-
-    
-
-    
     // image_parent = $("#selected-image").parent()
     let file = $("#image-selector").prop('files')[0];
     reader.readAsDataURL(file);
@@ -198,3 +194,24 @@ transform_face = async function() {
 }
 
 $("#predict-button").click(transform_face);
+
+$(document).ready(function() {
+    $('#interpolation-step').slider({
+        range: true,
+        slide: attachSlider
+    })
+
+    function attachSlider() {
+        transform_face();
+    }
+});
+ 
+$(".target-row").change(function(){
+    console.log("target-sex")
+    transform_face();
+  });
+
+$("target-smile").change(function(){
+    console.log("target-smile")
+    transform_face();
+});
