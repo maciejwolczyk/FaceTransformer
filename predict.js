@@ -197,11 +197,9 @@ $(document).ready(function() {
 });
  
 $(".target-row").change(function(){
-    console.log("target-sex")
     transform_face();
   });
 
 $("target-smile").change(function(){
-    console.log("target-smile")
     transform_face();
 });
